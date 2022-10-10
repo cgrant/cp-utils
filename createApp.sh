@@ -28,6 +28,7 @@ echo GIT_USERNAME=${GIT_USERNAME}
 echo INSTANCE_GIT_REPO_NAME=${INSTANCE_GIT_REPO_NAME} 
 echo INSTANCE_GIT_REPO_TOKEN=${INSTANCE_GIT_REPO_TOKEN}
 echo GIT_TOKEN=$GIT_TOKEN
+echo TEMPLATE_FOLDER=${TEMPLATE_FOLDER}
 
 apt-get update
 apt-get install curl git -y
@@ -35,7 +36,7 @@ apt-get install curl git -y
 #git config --global user.email $(gcloud config get-value account)
 git config --global user.email ${INSTANCE_GIT_REPO_OWNER}
 git config --global user.name ${INSTANCE_GIT_REPO_OWNER}
-git config --global init.defaultBranch main
+
 
 #git clone https://github.com/gitrey/cp-templates.git util
 
@@ -47,18 +48,15 @@ printf 'Creating application: %s \n' $APP_NAME
 
 # # Create an instance of the template.
 # Clone the template repo
-#git clone https://github.com/GoogleCloudPlatform/software-delivery-workshop.git plat
-#mv plat/delivery-platform/resources/repos/app-templates ./
-#rm -rf plat
-rm -rf ./cp-templates/.git
-cd ./cp-templates/application/go-app-cicd/
+rm -rf ./${TEMPLATE_FOLDER}/.git
+cd ./${TEMPLATE_FOLDER}/
 
 # Swap Variables
 for template in $(find . -name '*.tmpl'); do envsubst < ${template} > ${template%.*}; done
 
 # Create and push to new repo
 git init
-#git checkout -b main
+git checkout -b main
 #git symbolic-ref HEAD refs/heads/main
 echo create repo
 ${GIT_CMD} create ${APP_NAME}
