@@ -35,7 +35,7 @@ apt-get install curl git -y
 #git config --global user.email $(gcloud config get-value account)
 git config --global user.email ${INSTANCE_GIT_REPO_OWNER}
 git config --global user.name ${INSTANCE_GIT_REPO_OWNER}
-
+git config --global init.defaultBranch main
 
 #git clone https://github.com/gitrey/cp-templates.git util
 
@@ -51,14 +51,14 @@ printf 'Creating application: %s \n' $APP_NAME
 #mv plat/delivery-platform/resources/repos/app-templates ./
 #rm -rf plat
 rm -rf ./cp-templates/.git
-cd ./cp-templates/go-app-cicd/
+cd ./cp-templates/application/go-app-cicd/
 
 # Swap Variables
 for template in $(find . -name '*.tmpl'); do envsubst < ${template} > ${template%.*}; done
 
 # Create and push to new repo
 git init
-git checkout -b main
+#git checkout -b main
 #git symbolic-ref HEAD refs/heads/main
 echo create repo
 ${GIT_CMD} create ${APP_NAME}
