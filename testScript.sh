@@ -9,7 +9,6 @@ export API_KEY=
 
 export INSTANCE_GIT_REPO_TOKEN=
 export INSTANCE_GIT_REPO_OWNER=cgrant
-export INSTANCE_GIT_REPO_NAME=${APP_ID}
 
 
 
