@@ -1,12 +1,11 @@
 
 ## Required Vars
 
-# APP_NAME
+# APP_ID
 # REGION
 
 # INSTANCE_GIT_REPO_TOKEN
 # INSTANCE_GIT_REPO_OWNER
-# INSTANCE_GIT_REPO_NAME
 
 
 
@@ -22,10 +21,9 @@ export GIT_ASKPASS=${BASE_DIR}/utils/git/git-ask-pass.sh
 ## Verify Vars
 echo GIT_ASKPASS=${GIT_ASKPASS}
 echo REGION=${REGION} 
-echo APP_NAME=${APP_NAME} 
+echo APP_ID=${APP_ID}
 echo INSTANCE_GIT_REPO_OWNER=${INSTANCE_GIT_REPO_OWNER} 
 echo GIT_USERNAME=${GIT_USERNAME}
-echo INSTANCE_GIT_REPO_NAME=${INSTANCE_GIT_REPO_NAME} 
 echo INSTANCE_GIT_REPO_TOKEN=${INSTANCE_GIT_REPO_TOKEN}
 echo GIT_TOKEN=$GIT_TOKEN
 echo TEMPLATE_FOLDER=${TEMPLATE_FOLDER}
@@ -44,7 +42,7 @@ git config --global user.name ${INSTANCE_GIT_REPO_OWNER}
 
 #source $GIT_ASKPASS
 
-printf 'Creating application: %s \n' $APP_NAME
+printf 'Creating application: %s \n' $APP_ID
 
 # # Create an instance of the template.
 # Clone the template repo
@@ -59,8 +57,8 @@ git init
 git checkout -b main
 #git symbolic-ref HEAD refs/heads/main
 echo create repo
-${GIT_CMD} create ${APP_NAME}
-git remote add origin $GIT_BASE_URL/${APP_NAME}
+${GIT_CMD} create ${APP_ID}
+git remote add origin $GIT_BASE_URL/${APP_ID}
 git add . && git commit -m "initial commit" 
 git push origin main
 # Auth fails intermittetly on the very first client call for some reason
