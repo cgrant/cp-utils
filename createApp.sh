@@ -29,7 +29,7 @@ echo GIT_TOKEN=$GIT_TOKEN
 echo TEMPLATE_FOLDER=${TEMPLATE_FOLDER}
 
 apt-get update
-apt-get install curl git -y
+apt-get install curl gettext git -y
 
 #git config --global user.email $(gcloud config get-value account)
 git config --global user.email ${INSTANCE_GIT_REPO_OWNER}
