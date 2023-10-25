@@ -47,9 +47,17 @@ export GIT_ASKPASS=$BASE_DIR/common/ghp.sh
 
 ## Execution
 create_webhook () {
-  curl -H "Authorization: token ${GIT_TOKEN}" \
+  response=$(curl -H "Authorization: token ${GIT_TOKEN}" \
     -d '{"config": {"url": "'${WEBHOOK_URL}'", "content_type": "json"}}' \
-    -X POST ${GIT_API_BASE}/repos/${GIT_USERNAME}/${repo}/hooks 
+    -X POST ${GIT_API_BASE}/repos/${GIT_USERNAME}/${repo}/hooks)
+
+  hook_id=`echo "$response" | grep -o '"id": [0-9]*' | grep -o '[0-9]*$'`
+
+  # Trigger webhook using the hook id returned by the create webhook call to ensure a payload with ref and sha is sent
+  curl -L \
+       -X POST \
+       -H "Authorization: token ${GIT_TOKEN}" \
+       -H "X-GitHub-Api-Version: 2022-11-28" ${GIT_API_BASE}/repos/${GIT_USERNAME}/${repo}/hooks/$hook_id/tests
 }
 
 
